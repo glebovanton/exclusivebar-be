@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Product Service
+  description: Let's try to create a competitor for Product Service!
+  version: 1.0.0
+
+servers:
+  - url: /
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        count:
+          type: number
+        description:
+          type: string
+        price:
+          type: number
+        title:
+          type: string
+    Weather:
+      type: object
+      properties:
+        city:
+          type: string
+        temperature:
+          type: number
+        textWeather:
+          type: string
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+
+paths:
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      description: Gets all products
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+  /products/{productId}:
+    parameters:
+      - name: productId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Products
+      summary: Get product by ID
+      description: Gets a product by ID
+        e.g. “/products/123”
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        404:
+          description: Product not found
+  /weather/{city}/current:
+    parameters:
+      - name: city
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Weather
+      summary: Get weather by city
+      description: Gets the Weather by city (e.g. “/weather/minsk/current”)
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Weather"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        404:
+          description: Weather not found
