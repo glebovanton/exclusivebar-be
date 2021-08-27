@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+.idea/
+.build/
+/product-service/.build/
+/product-service-old/
+
+admin.env
+.env
+_meta
+.serverless
