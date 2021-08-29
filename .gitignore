@@ -4,6 +4,7 @@ node_modules/
 .build/
 /product-service/.build/
 /product-service-old/
+.webpack
 
 admin.env
 .env
