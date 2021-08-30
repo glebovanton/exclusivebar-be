@@ -20,7 +20,7 @@ const getById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
       })
     : {
         statusCode: StatusCodes.NOT_FOUND,
-        body: "Product not found",
+        body: JSON.stringify("Product not found"),
         headers: {
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Methods": "*",
