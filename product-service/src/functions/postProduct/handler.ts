@@ -2,15 +2,18 @@ import "source-map-support/register";
 import { StatusCodes } from "http-status-codes";
 import { formatJSONResponse } from "../../libs/apiGateway";
 import { middyfy } from "../../libs/lambda";
+import {lambdaLog} from "../../helpers/log";
 
 import { HttpResponse } from "@functions/getWeather/handler";
 
 import { postProduct as createProduct } from "../../helpers/postProduct";
 
+
 export async function postProduct(event): HttpResponse {
+    lambdaLog("postProduct", event);
   if (!event?.body) {
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.BAD_REQUEST,
       body: JSON.stringify("Cannot create product"),
     };
   }
@@ -22,7 +25,7 @@ export async function postProduct(event): HttpResponse {
   return product?.status === StatusCodes.OK
     ? formatJSONResponse(product.message)
     : {
-        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+        statusCode: StatusCodes.BAD_REQUEST,
         body: JSON.stringify("Cannot create product"),
         headers: {
           "Access-Control-Allow-Credentials": true,

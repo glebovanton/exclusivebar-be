@@ -6,8 +6,10 @@ import { middyfy } from "../../libs/lambda";
 import { HttpResponse } from "@functions/getWeather/handler";
 
 import { getProduct } from "../../helpers/getProduct";
+import { lambdaLog } from "../../helpers/log";
 
 export async function getById(event): HttpResponse {
+  lambdaLog("getById", event);
   const { id } = event.pathParameters;
   const product = await getProduct(id);
   return product.length > 0
