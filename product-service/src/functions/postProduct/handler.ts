@@ -2,15 +2,14 @@ import "source-map-support/register";
 import { StatusCodes } from "http-status-codes";
 import { formatJSONResponse } from "../../libs/apiGateway";
 import { middyfy } from "../../libs/lambda";
-import {lambdaLog} from "../../helpers/log";
+import { lambdaLog } from "../../helpers/log";
 
 import { HttpResponse } from "@functions/getWeather/handler";
 
 import { postProduct as createProduct } from "../../helpers/postProduct";
 
-
 export async function postProduct(event): HttpResponse {
-    lambdaLog("postProduct", event);
+  lambdaLog("postProduct", event);
   if (!event?.body) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
