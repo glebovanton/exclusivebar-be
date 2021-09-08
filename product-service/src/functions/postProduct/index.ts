@@ -8,13 +8,6 @@ export default {
         method: "post",
         path: "products",
         cors: true,
-        request: {
-          parameters: {
-            paths: {
-              id: true,
-            },
-          },
-        },
       },
     },
   ],
