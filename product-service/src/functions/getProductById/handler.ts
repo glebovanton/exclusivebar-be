@@ -5,12 +5,12 @@ import { middyfy } from "../../libs/lambda";
 
 import { HttpResponse } from "@functions/getWeather/handler";
 
-import { products } from "./mocks";
+import { getProduct } from "../../helpers/getProduct";
 
 export async function getById(event): HttpResponse {
   const { id } = event.pathParameters;
-  const product = products.find((product) => product.id === id);
-  return product
+  const product = await getProduct(id);
+  return product.length > 0
     ? formatJSONResponse(product)
     : {
         statusCode: StatusCodes.NOT_FOUND,
