@@ -43,6 +43,14 @@
     "webpack": "^5.20.2",
     "webpack-node-externals": "^2.5.2"
   },
+  "jest": {
+    "transform": {
+      ".+\\.tsx?$": "ts-jest"
+    },
+    "modulePathIgnorePatterns": [
+      "mocks"
+    ]
+  },
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT"
 }
