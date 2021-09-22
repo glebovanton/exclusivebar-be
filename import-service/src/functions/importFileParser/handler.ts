@@ -5,16 +5,15 @@ import * as csv from "csv-parser";
 import { middyfy } from "@libs/lambda";
 
 const importFileParser = async (event) => {
-  const BUCKET = "import-service";
+  const BUCKET = "import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny";
   const s3 = new AWS.S3({ region: "eu-west-1" });
 
   event.Records.forEach((record) => {
-    const s3Stream = s3
-      .getObject({
-        Bucket: BUCKET,
-        Key: record.s3.object.key,
-      })
-      .createReadStream();
+    const params = {
+      Bucket: BUCKET,
+      Key: record.s3.object.key,
+    };
+    const s3Stream = s3.getObject(params).createReadStream();
     s3Stream
       .pipe(csv())
       .on("data", (data) => {
@@ -30,8 +29,9 @@ const importFileParser = async (event) => {
             Key: copiedKey,
           })
           .promise();
-
         console.log(`Copied into ${copiedKey}`);
+        await s3.deleteObject(params).promise();
+        console.log(`${BUCKET}/${record.s3.object.key} was deleted`);
       });
   });
 };

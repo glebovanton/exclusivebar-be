@@ -20,13 +20,13 @@ const serverlessConfiguration: AWS = {
     iamRoleStatements: [
       {
         Effect: "Allow",
-        Action: "s3:ListBucket",
-        Resource: "arn:aws:s3:::import-service",
+        Action: ["s3:ListBucket", "s3:PutObject", "s3:PutObjectAcl"],
+        Resource: ["arn:aws:s3:::import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny"],
       },
       {
         Effect: "Allow",
-        Action: "s3:*",
-        Resource: "arn:aws:s3:::import-service/*",
+        Action: ["s3:*"],
+        Resource: ["arn:aws:s3:::import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny/*"],
       },
     ],
     stage: "dev",

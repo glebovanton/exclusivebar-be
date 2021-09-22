@@ -5,11 +5,13 @@ export default {
   events: [
     {
       s3: {
-        bucket: "product-service",
+        bucket: "import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny",
         event: "s3:ObjectCreated:*",
+        cors: true,
         rules: [
           {
             prefix: "uploaded/",
+            suffix: ".csv",
           },
         ],
         existing: true,
