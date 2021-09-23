@@ -1,6 +1,6 @@
 import "source-map-support/register";
 import * as AWS from "aws-sdk";
-import * as csv from "csv-parser";
+import csvParser from "csv-parser";
 
 import { middyfy } from "@libs/lambda";
 
@@ -15,7 +15,7 @@ const importFileParser = async (event) => {
     };
     const s3Stream = s3.getObject(params).createReadStream();
     s3Stream
-      .pipe(csv())
+      .pipe(csvParser())
       .on("data", (data) => {
         console.log("s3Stream data", data);
       })
