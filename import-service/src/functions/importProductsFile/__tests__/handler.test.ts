@@ -1,14 +1,20 @@
 import { importProductsFile } from "../handler";
 
-describe("Import service importProductsFile", () => {
+interface Result {
+  headers?: {};
+  statusCode?: number;
+  body?: string;
+}
+const testName = 'example.csv'
+
+describe("ImportProductsFile lambda function", () => {
   test("should return signed url", async () => {
     const event = {
       queryStringParameters: {
-        name: "",
+        name: testName,
       },
     };
-    const result = await importProductsFile(event);
-    console.log("result", result);
-    expect("").toEqual("");
+    const result: Result = await importProductsFile(event);
+    expect(result.body).toContain(`amazonaws.com/uploaded/${testName}`);
   });
 });

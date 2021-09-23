@@ -1,7 +1,7 @@
 import "source-map-support/register";
 import * as AWS from "aws-sdk";
-import { middyfy } from "@libs/lambda";
-import { formatJSONResponse } from "@libs/apiGateway";
+import { middyfy } from "../../libs/lambda";
+import { formatJSONResponse } from "../../libs/apiGateway";
 
 export const importProductsFile = async (event) => {
   const catalogName = event.queryStringParameters.name;
