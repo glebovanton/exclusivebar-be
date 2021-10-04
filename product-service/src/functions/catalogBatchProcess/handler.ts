@@ -1,10 +1,11 @@
 import "source-map-support/register";
 
-import { middyfy } from "@libs/lambda";
+import { middyfy } from "../../libs/lambda";
+import { formatJSONResponse } from "../../libs/apiGateway";
 import { SNS } from "aws-sdk";
 import { postProduct } from "../../helpers/postProduct";
 
-const catalogBatchProcess = async (event) => {
+export const catalogBatchProcess = async (event) => {
   try {
     for (const record of event.Records) {
       const sns = new SNS({});
@@ -40,6 +41,11 @@ const catalogBatchProcess = async (event) => {
         );
       }
     }
+    const response = event.Records.map((record) => {
+      return JSON.parse(record["body"]);
+    });
+
+    return formatJSONResponse(response);
   } catch (error) {
     console.log(error);
   }
