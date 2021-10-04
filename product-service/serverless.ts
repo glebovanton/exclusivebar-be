@@ -11,7 +11,7 @@ const serverlessConfiguration: AWS = {
   service: "product-service",
   frameworkVersion: "2",
   useDotenv: true,
-  configValidationMode: 'error',
+  configValidationMode: "error",
   custom: {
     webpack: {
       webpackConfig: "./webpack.config.js",
@@ -82,17 +82,10 @@ const serverlessConfiguration: AWS = {
           Protocol: "email",
           TopicArn: {
             Ref: "createProductTopic",
-          },
-          FilterPolicy: {
-            price: [
-              {
-                numeric: ["<=", 5],
-              },
-            ],
-          },
+          }
         },
       },
-      expensiveProductSubscription: {
+      createExpensiveProductSubscription: {
         Type: "AWS::SNS::Subscription",
         Properties: {
           Endpoint: "${env:SECOND_EMAIL}",

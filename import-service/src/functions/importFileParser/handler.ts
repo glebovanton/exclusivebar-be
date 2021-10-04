@@ -10,7 +10,7 @@ function sendRecordsToSqs(data) {
   sqs.sendMessage(
     {
       QueueUrl: SQS_URL,
-      MessageBody: JSON.stringify(data),
+      MessageBody: `Product: ${JSON.stringify(data)}`,
     },
     (err, result) => {
       if (err) {
@@ -35,8 +35,8 @@ const importFileParser = async (event) => {
     s3Stream
       .pipe(csvParser())
       .on("data", (data) => {
-        sendRecordsToSqs(data);
         console.log("s3Stream data", data);
+        sendRecordsToSqs(data);
       })
       .on("end", async () => {
         console.log(`Copy from ${BUCKET}/${record.s3.object.key}`);
