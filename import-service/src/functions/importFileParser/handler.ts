@@ -4,6 +4,24 @@ import csvParser from "csv-parser";
 
 import { middyfy } from "@libs/lambda";
 
+function sendRecordsToSqs(data) {
+  const sqs = new AWS.SQS();
+  const { SQS_URL } = process.env;
+  sqs.sendMessage(
+    {
+      QueueUrl: SQS_URL,
+      MessageBody: JSON.stringify(data),
+    },
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(result);
+    }
+  );
+}
+
 const importFileParser = async (event) => {
   const BUCKET = "import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny";
   const s3 = new AWS.S3({ region: "eu-west-1" });
@@ -17,6 +35,7 @@ const importFileParser = async (event) => {
     s3Stream
       .pipe(csvParser())
       .on("data", (data) => {
+        sendRecordsToSqs(data);
         console.log("s3Stream data", data);
       })
       .on("end", async () => {
