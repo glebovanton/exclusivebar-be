@@ -1,11 +1,11 @@
-Title;Description;Price;Count
-[AWG] ProductNew10;[AWG]Short Product Description10;100;2
-[AWG] ProductNew11;[AWG]Short Product Description11;1;20
-[AWG] ProductNew12;[AWG]Short Product Description12;5;2
-[AWG] ProductNew13;[AWG]Short Product Description13;1;20
-[AWG] ProductNew14;[AWG]Short Product Description14;9;2
-[AWG] ProductNew15;[AWG]Short Product Description15;1;20
-[AWG] ProductNew16;[AWG]Short Product Description16;60;2
-[AWG] ProductNew17;[AWG]Short Product Description17;4;20
-
-
+title,description,price,count
+Cocktail-1,Cocktail-1 description,1,10
+Cocktail-2,Cocktail-2 description,2,20
+Cocktail-3,Cocktail-3 description,3,30
+Cocktail-4,Cocktail-4 description,4,40
+Cocktail-5,Cocktail-5 description,5,50
+Cocktail-6,Cocktail-6 description,6,60
+Cocktail-7,Cocktail-7 description,7,70
+Cocktail-8,Cocktail-8 description,8,80
+Cocktail-9,Cocktail-9 description,9,90
+Cocktail-10,Cocktail-10 description,10,100
