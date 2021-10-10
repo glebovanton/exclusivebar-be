@@ -6,6 +6,8 @@ import importProductsFile from "@functions/importProductsFile";
 const serverlessConfiguration: AWS = {
   service: "import-service",
   frameworkVersion: "2",
+  useDotenv: true,
+  configValidationMode: 'error',
   custom: {
     webpack: {
       webpackConfig: "./webpack.config.js",
@@ -21,12 +23,21 @@ const serverlessConfiguration: AWS = {
       {
         Effect: "Allow",
         Action: ["s3:ListBucket", "s3:PutObject", "s3:PutObjectAcl"],
-        Resource: ["arn:aws:s3:::import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny"],
+        Resource: [
+          "arn:aws:s3:::import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny",
+        ],
       },
       {
         Effect: "Allow",
         Action: ["s3:*"],
-        Resource: ["arn:aws:s3:::import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny/*"],
+        Resource: [
+          "arn:aws:s3:::import-service-dev-serverlessdeploymentbucket-1qqm0b0mlj9ny/*",
+        ],
+      },
+      {
+        Effect: "Allow",
+        Action: "sqs:*",
+        Resource: { "Fn::ImportValue": "catalogItemsQueueArn" },
       },
     ],
     stage: "dev",
@@ -36,6 +47,7 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+      SQS_URL: { "Fn::ImportValue": "catalogItemsQueue" },
     },
     lambdaHashingVersion: "20201221",
   },
