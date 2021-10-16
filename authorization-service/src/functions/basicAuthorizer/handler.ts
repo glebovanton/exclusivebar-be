@@ -1,7 +1,23 @@
 import { middyfy } from "../../libs/lambda";
 
+function generatePolicy(principalId, resource, effect = "Allow") {
+  return {
+    principalId: principalId,
+    policyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Action: "execute-api:Invoke",
+          Effect: effect,
+          Resource: resource,
+        },
+      ],
+    },
+  };
+}
+
 export async function basicAuthorizer(event, _ctx, cb) {
-  if (event["type"] != "TOKEN") cb("Unauthorized");
+  if (event["type"] !== "TOKEN") cb("Unauthorized");
 
   try {
     const { authorizationToken } = event;
@@ -19,22 +35,6 @@ export async function basicAuthorizer(event, _ctx, cb) {
   } catch (error) {
     cb(`Unauthorized: ${error.message}`);
   }
-}
-
-function generatePolicy(principalId, resource, effect = "Allow") {
-  return {
-    principalId: principalId,
-    policyDocument: {
-      Version: "2012-10-17",
-      Statement: [
-        {
-          Action: "execute-api:Invoke",
-          Effect: effect,
-          Resource: resource,
-        },
-      ],
-    },
-  };
 }
 
 export const main = middyfy(basicAuthorizer);
