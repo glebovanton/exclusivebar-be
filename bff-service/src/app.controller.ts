@@ -24,8 +24,10 @@ export class AppController {
 
   @All('*')
   async root(@Req() { originalUrl, method, body }: Request) {
-    const recipient = originalUrl.split('/')[1];
-    const shouldUseCache = method === 'GET' && recipient === 'products';
+    const urlParts = originalUrl.split('/');
+    const recipient = urlParts[1];
+    const isProductId = urlParts?.length > 2
+    const shouldUseCache = method === 'GET' && recipient === 'products' && !isProductId;
     const cachedProducts = await this.cacheManager.get(this.productsCacheKey);
 
     if (shouldUseCache && cachedProducts) {
