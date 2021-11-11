@@ -2,6 +2,7 @@ import type { AWS } from "@serverless/typescript";
 
 import hello from "@functions/hello";
 import catalogBatchProcess from "@functions/catalogBatchProcess";
+import deleteProduct from "@functions/deleteProduct";
 import getAllProducts from "@functions/getAllProducts";
 import getProductById from "@functions/getProductById";
 import getWeather from "@functions/getWeather";
@@ -126,6 +127,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     hello,
     catalogBatchProcess,
+    deleteProduct,
     getAllProducts,
     getProductById,
     getWeather,
